@@ -13,7 +13,7 @@ x, y = iris.data, iris.target
 x_df = DataFrame(x, columns= iris.feature_names)
 x_train, x_test, y_train, y_test = train_test_split(x_df, y, test_size=0.15)
 
-# defining parameters 
+#параметрлерін анықтау
 params = {
     'boosting': 'gbdt',
     'objective': 'multiclass',
@@ -21,17 +21,17 @@ params = {
     'num_class': 3
 }
 
-# laoding data
+#деректерді жүктеу
 lgb_train = lgb.Dataset(x_train, y_train)
 lgb_eval = lgb.Dataset(x_test, y_test, reference=lgb_train)
 
-# fitting the model
+# үлгіге сәйкес келу
 model = lgb.train(params,
                  train_set=lgb_train,
                  valid_sets=lgb_eval,
                  early_stopping_rounds=30)
 
-# prediction
+# болжау
 y_pred = model.predict(x_test)
 
 y_pred = argmax(y_pred, axis=1)
@@ -41,4 +41,4 @@ cm = confusion_matrix(y_test, y_pred)
 print(cr)
 print(cm)
 
-lgb.plot_importance(model, height=.5)
+lgb.plot_importance(model, height=.5) 
